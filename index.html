@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SelinNur & Muhammet - Davetiye</title>
+
+  <!-- Fontlar -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --pink:#ffc0dc;
+      --white:#ffffff;
+      --gold:#d4af37;
+      --bg-gradient: linear-gradient(180deg, rgba(255,230,240,1) 0%, rgba(255,250,250,1) 60%);
+      --glass: rgba(255,255,255,0.75);
+      --accent: rgba(212,175,55,0.95);
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg-gradient);
+      color:#333;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Mobil odaklı konteyner */
+    .wrap{
+      max-width:420px;
+      margin:0 auto;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      position:relative;
+      padding:22px;
+      box-sizing:border-box;
+    }
+
+    header{
+      margin-top:28px;
+      text-align:center;
+      z-index:5;
+    }
+    .names{
+      font-family: "Great Vibes", cursive;
+      font-size:48px;
+      color:var(--accent);
+      letter-spacing:1px;
+      text-shadow: 0 6px 12px rgba(212,175,55,0.12);
+      margin:0;
+      line-height:1;
+    }
+    .subtitle{
+      margin-top:6px;
+      color:#8b7a7a;
+      font-weight:500;
+      font-size:14px;
+    }
+
+    main.card{
+      margin-top:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.9));
+      border-radius:16px;
+      padding:16px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.08);
+      backdrop-filter: blur(6px);
+      z-index:5;
+    }
+
+    .event{
+      padding:12px 8px;
+      border-radius:12px;
+      margin-bottom:12px;
+      background: linear-gradient(90deg, rgba(255,240,247,0.6), rgba(255,255,255,0.4));
+      border: 1px solid rgba(212,175,55,0.08);
+    }
+    .event h3{
+      margin:0;
+      font-size:16px;
+      color: #b63b7a;
+      font-weight:700;
+    }
+    .meta{
+      margin-top:8px;
+      font-size:13px;
+      color:#5a4b4b;
+    }
+    .location-row{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+    }
+    .btn{
+      flex:1;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 12px;
+      border-radius:10px;
+      border:none;
+      font-weight:600;
+      font-size:14px;
+      color:var(--white);
+      background: linear-gradient(90deg,var(--pink),var(--accent));
+      box-shadow: 0 6px 18px rgba(212,175,55,0.12);
+      text-decoration:none;
+    }
+    .btn.map{
+      background: linear-gradient(90deg,#ff8fb9,#ff66a3);
+    }
+    .btn.call{
+      background: linear-gradient(90deg,var(--accent),#bf8d2a);
+    }
+
+    /* Countdown */
+    .countdowns{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+    }
+    .cd{
+      flex:1;
+      background:rgba(255,255,255,0.95);
+      border-radius:10px;
+      padding:8px;
+      text-align:center;
+      border:1px solid rgba(0,0,0,0.03);
+    }
+    .cd .num{
+      font-size:18px;
+      font-weight:700;
+      color:#b4427f;
+    }
+    .cd .label{font-size:11px;color:#7a6a6a;margin-top:4px;}
+
+    /* Aile listesi footer */
+    footer{
+      margin-top:14px;
+      padding:12px;
+      text-align:left;
+      font-size:14px;
+      color:#3b2f2f;
+      z-index:5;
+    }
+    .family{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .member{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+      padding:10px;
+      border-radius:10px;
+      border:1px solid rgba(212,175,55,0.06);
+    }
+    .member .name{font-weight:600;color:#6b4353;}
+    .member a{color:var(--accent);text-decoration:none;font-weight:700;}
+
+    /* Footer small */
+    .host{
+      margin-top:12px;
+      text-align:center;
+      color:#8b6d6d;
+      font-size:12px;
+    }
+
+    /* Petal animation */
+    .petal{
+      position:fixed;
+      top:-10vh;
+      pointer-events:none;
+      z-index:1;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
+    }
+    @keyframes fall {
+      0%{ transform: translateY(-10vh) rotate(0deg); opacity:0 }
+      10%{ opacity:1 }
+      100%{ transform: translateY(110vh) rotate(360deg); opacity:0.95 }
+    }
+
+    /* Responsive tweaks */
+    @media(min-width:800px){
+      .wrap{ max-width:760px; padding:36px; }
+      .names{ font-size:88px; }
+      .card{ padding:26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap" id="page">
+    <!-- Petals container (JS will add petals) -->
+    <div id="petal-root" aria-hidden="true"></div>
+
+    <header>
+      <h1 class="names">SELINNUR & MUHAMMET</h1>
+      <div class="subtitle">Sizi sevgiyle bekliyoruz — Davetimiz</div>
+    </header>
+
+    <main class="card" role="main" aria-labelledby="davetiye">
+      <section class="event" id="nikah">
+        <h3>Nikah Töreni</h3>
+        <div class="meta">Tarih: 08.08.2026 • Saat: 14:30</div>
+        <div class="meta" style="margin-top:6px;font-weight:600">Mekan: İstanbul — Bahçelievler Belediyesi Kongre ve Nikah Sarayı</div>
+        <div class="location-row">
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&query=Bah%C3%A7elievler+Kongre+ve+Nikah+Saray%C4%B1+%C4%B0stanbul" target="_blank" rel="noopener" aria-label="Bahçelievler Kongre ve Nikah Sarayı Haritada Aç">Haritada Aç</a>
+          <a class="btn call" href="tel:+905383483012" aria-label="Ara: Tahsin Erdo1fdu">Ara</a>
+        </div>
+
+        <div class="countdowns" style="margin-top:10px;">
+          <div class="cd">
+            <div class="num" id="cd-n-days">--</div>
+            <div class="label">Gün</div>
+          </div>
+          <div class="cd">
+            <div class="num" id="cd-n-hours">--</div>
+            <div class="label">Saat</div>
+          </div>
+          <div class="cd">
+            <div class="num" id="cd-n-mins">--</div>
+            <div class="label">Dakika</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="event" id="dugun">
+        <h3>Düğün ve Davet</h3>
+        <div class="meta">Tarih: 11.09.2026 • Saat: 18:00 — 24:00</div>
+        <div class="meta" style="margin-top:6px;font-weight:600">Mekan: Balıkesir — Manyas Belediyesi Düğün Salonu</div>
+        <div class="location-row">
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&query=Manyas+Belediyesi+D%C3%BC%C4%9Fn+Salonu+Manyas+Bal%C4%B1kesir" target="_blank" rel="noopener" aria-label="Manyas Belediyesi Düğün Salonu Haritada Aç">Haritada Aç</a>
+          <a class="btn call" href="tel:+905438897607" aria-label="Ara: Selin Erdo1fdu">Ara</a>
+        </div>
+
+        <div class="countdowns" style="margin-top:10px;">
+          <div class="cd">
+            <div class="num" id="cd-d-days">--</div>
+            <div class="label">Gün</div>
+          </div>
+          <div class="cd">
+            <div class="num" id="cd-d-hours">--</div>
+            <div class="label">Saat</div>
+          </div>
+          <div class="cd">
+            <div class="num" id="cd-d-mins">--</div>
+            <div class="label">Dakika</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RSVP / Not: Bu örnek statik. İstersen rsvp formu eklerim. -->
+    </main>
+
+    <footer>
+      <div style="font-size:13px;font-weight:700;color:#7a455c;margin-bottom:10px">Aile Büyükleri</div>
+      <div class="family">
+        <div class="member">
+          <div class="name">Tahsin Erdo1fdu</div>
+          <a href="tel:+905383483012">0538 348 30 12</a>
+        </div>
+        <div class="member">
+          <div class="name">Selin Erdo1fdu</div>
+          <a href="tel:+905438897607">0543 889 76 07</a>
+        </div>
+        <div class="member">
+          <div class="name">Halil  c7etin</div>
+          <a href="tel:+905373040728">0537 304 07 28</a>
+        </div>
+        <div class="member">
+          <div class="name">Muhammet  c7etin</div>
+          <a href="tel:+905524431997">0552 443 19 97</a>
+        </div>
+      </div>
+
+      <div class="host">Hesap: <strong style="color:var(--accent)">pasagt36-bot</strong> • Davet: Mobille uyumlu</div>
+    </footer>
+  </div>
+
+  <script>
+    /* Tarihler - Türkiye saat dilimi varsayımı (UTC+3) */
+    const nikahDate = new Date('2026-08-08T14:30:00+03:00');
+    const dugunDate = new Date('2026-09-11T18:00:00+03:00');
+
+    function updateCountdowns(){
+      const now = new Date();
+
+      function update(target, pref){
+        const diff = target - now;
+        const daysEl = document.getElementById(pref+'-days');
+        const hoursEl = document.getElementById(pref+'-hours');
+        const minsEl = document.getElementById(pref+'-mins');
+
+        if(diff <= 0){
+          if(daysEl) daysEl.innerText = '0';
+          if(hoursEl) hoursEl.innerText = '0';
+          if(minsEl) minsEl.innerText = '0';
+          return;
+        }
+        const mins = Math.floor( (diff/1000/60) % 60 );
+        const hours = Math.floor( (diff/1000/60/60) % 24 );
+        const days = Math.floor( diff/1000/60/60/24 );
+        if(daysEl) daysEl.innerText = days;
+        if(hoursEl) hoursEl.innerText = hours;
+        if(minsEl) minsEl.innerText = mins;
+      }
+
+      // Nikah kısım elemanları IDs: cd-n-days, cd-n-hours, cd-n-mins
+      const cdN = {
+        'days': document.getElementById('cd-n-days'),
+        'hours': document.getElementById('cd-n-hours'),
+        'mins': document.getElementById('cd-n-mins')
+      };
+      const cdD = {
+        'days': document.getElementById('cd-d-days'),
+        'hours': document.getElementById('cd-d-hours'),
+        'mins': document.getElementById('cd-d-mins')
+      };
+
+      // update generic
+      (function updateOne(target, els){
+        const diff = target - now;
+        if(diff <= 0){
+          els.days.innerText = '0';
+          els.hours.innerText = '0';
+          els.mins.innerText = '0';
+          return;
+        }
+        const mins = Math.floor( (diff/1000/60) % 60 );
+        const hours = Math.floor( (diff/1000/60/60) % 24 );
+        const days = Math.floor( diff/1000/60/60/24 );
+        els.days.innerText = days;
+        els.hours.innerText = hours;
+        els.mins.innerText = mins;
+      })(nikahDate, cdN);
+
+      (function updateTwo(target, els){
+        const diff = target - now;
+        if(diff <= 0){
+          els.days.innerText = '0';
+          els.hours.innerText = '0';
+          els.mins.innerText = '0';
+          return;
+        }
+        const mins = Math.floor( (diff/1000/60) % 60 );
+        const hours = Math.floor( (diff/1000/60/60) % 24 );
+        const days = Math.floor( diff/1000/60/60/24 );
+        els.days.innerText = days;
+        els.hours.innerText = hours;
+        els.mins.innerText = mins;
+      })(dugunDate, cdD);
+    }
+
+    updateCountdowns();
+    setInterval(updateCountdowns, 60*1000); // Her dakika güncelle
+
+    /* Petal (yaprak) animasyonu oluşturma */
+    const petalRoot = document.getElementById('petal-root');
+
+    function rand(min,max){ return Math.random()*(max-min)+min; }
+
+    function makePetal(){
+      const el = document.createElement('div');
+      el.className = 'petal';
+      const size = rand(14,44);
+      el.style.width = size + 'px';
+      el.style.height = size*0.7 + 'px';
+      el.style.left = rand(-10,110) + '%';
+      el.style.opacity = rand(0.7,1);
+      el.style.background = `radial-gradient(ellipse at 30% 30%, rgba(255,214,237,0.95), rgba(255,183,218,0.95))`;
+      el.style.borderRadius = '60% 40% 60% 40% / 60% 40% 60% 40%';
+      el.style.transform = `rotate(${rand(-30,30)}deg)`;
+      const dur = rand(8,18);
+      el.style.animation = `fall ${dur}s linear`;
+      el.style.animationDelay = rand(-10,0)+'s';
+      // horizontal drift using transform translateX via additional animation
+      const drift = rand(-20,20);
+      el.style.setProperty('--drift', drift + 'px');
+      el.style.willChange = 'transform, opacity';
+      petalRoot.appendChild(el);
+
+      // Remove after animation ends and respawn
+      el.addEventListener('animationend', ()=> {
+        el.remove();
+        // spawn new
+        setTimeout(makePetal, rand(200,1500));
+      });
+    }
+
+    // Başlangıçta çoklu petal oluştur
+    for(let i=0;i<18;i++){ makePetal(); }
+
+    // Arka plan hafif altın ışıltı için body gradient ekle (statik)
+    // (Zaten CSS'te yapıldı)
+
+    // Klavye erişimi için harita butonlarına title ekle
+    document.querySelectorAll('.btn.map').forEach(b=>{
+      const t = b.closest('.event').querySelector('.meta');
+      b.title = b.getAttribute('aria-label') || 'Haritada aç';
+    });
+
+    // Dokunmatik ve mobil için hızlı scroll to top on tap of title
+    document.querySelector('.names').addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
+  </script>
+</body>
+</html>
