@@ -827,39 +827,7 @@
         <p>✨ Sevgiyle Davet Ediyoruz ✨</p>
     </footer>
 
-    <button class="audio-control" id="audioToggle" onclick="toggleAudio()" title="Müziği Aç/Kapat">
-        <span id="audioIcon">🔊</span>
-    </button>
-
-    <audio id="audioPlayer" loop>
-        <source src="https://www.youtube.com/watch?v=UK1W7PEnFBs" type="audio">
-    </audio>
-
-    <script>
-        let audioPlaying = false;
-        const audio = document.getElementById('audioPlayer');
-
-        function openMap(location) {
-            const encodedLocation = encodeURIComponent(location);
-            const googleMapsUrl = `https://www.google.com/maps/search/${encodedLocation}`;
-            window.open(googleMapsUrl, '_blank');
-        }
-
-        function toggleAudio() {
-            const icon = document.getElementById('audioIcon');
-
-            if (!audioPlaying) {
-                audio.play().catch(function(error) {
-                    console.log("Müzik çalma hatası:", error);
-                });
-                icon.textContent = '🔇';
-                audioPlaying = true;
-            } else {
-                audio.pause();
-                audio.currentTime = 0;
-                icon.textContent = '🔊';
-                audioPlaying = false;
-            }
+    
         }
 
         function updateCountdown() {
